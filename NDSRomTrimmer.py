@@ -1,8 +1,9 @@
+from __future__ import print_function
 import sys
 import os
 
 # Fixing Python 2 compatibility
-if(sys.version_info.major < (3)):
+if sys.version_info.major < 3:
 	input = raw_input
 
 # Allows clearing the screen on win32 & unix-based systems
@@ -36,45 +37,60 @@ def cleanFileName(file):
 def trim(file):
 	# Opening the rom
 	print('Reading...')
-	romFile = open(file, 'rb')
-	rom = romFile.read()
+	try:
+		romFile = open(file, 'rb')
+		rom = romFile.read()
+		romExists = True
+	except:
+		print('Rom reading failed')
+		romExists = False
 
-	print('Trimming', end='', flush=True)
+	if romExists:
+		print('Trimming', end='')
+		sys.stdout.flush()
 
-	# Trimming the rom
-	while rom[-10000000:-1] == (b'\xff'*9999999):
-		rom = rom[:-10000000]
-		print('.', end='', flush=True)
-	while rom[-1000000:-1] == (b'\xff'*999999):
-		rom = rom[:-1000000]
-		print('.', end='', flush=True)
-	while rom[-100000:-1] == (b'\xff'*99999):
-		rom = rom[:-100000]
-		print('.', end='', flush=True)
-	while rom[-10000:-1] == (b'\xff'*9999):
-		rom = rom[:-10000]
-		print('.', end='', flush=True)
-	while rom[-1000:-1] == (b'\xff'*999):
-		rom = rom[:-1000]
-		print('.', end='', flush=True)
-	while rom[-100:-1] == (b'\xff'*99):
-		rom = rom[:-100]
-		print('.', end='', flush=True)
-	while rom[-10:-1] == (b'\xff'*9):
-		rom = rom[:-10]
-		print('.', end='', flush=True)
-	while rom[-1] == 255:
-		rom = rom[:-1]
-		print('.', end='', flush=True)
+		# Trimming the rom
+		while rom[-10000000:-1] == (b'\xff'*9999999):
+			rom = rom[:-10000000]
+			print('.', end='')
+			sys.stdout.flush()
+		while rom[-1000000:-1] == (b'\xff'*999999):
+			rom = rom[:-1000000]
+			print('.', end='')
+			sys.stdout.flush()
+		while rom[-100000:-1] == (b'\xff'*99999):
+			rom = rom[:-100000]
+			print('.', end='')
+			sys.stdout.flush()
+		while rom[-10000:-1] == (b'\xff'*9999):
+			rom = rom[:-10000]
+			print('.', end='')
+			sys.stdout.flush()
+		while rom[-1000:-1] == (b'\xff'*999):
+			rom = rom[:-1000]
+			print('.', end='')
+			sys.stdout.flush()
+		while rom[-100:-1] == (b'\xff'*99):
+			rom = rom[:-100]
+			print('.', end='')
+			sys.stdout.flush()
+		while rom[-10:-1] == (b'\xff'*9):
+			rom = rom[:-10]
+			print('.', end='')
+			sys.stdout.flush()
+		while rom[-1] == 255:
+			rom = rom[:-1]
+			print('.', end='')
+			sys.stdout.flush()
 
-	print('\nSaving...')
+		print('\nSaving...')
 
-	# Saving the new rom
-	ouputFile = open(file[:-4] + ' - trimmed.nds', 'wb')
-	ouputFile.write(rom)
-	ouputFile.close()
+		# Saving the new rom
+		ouputFile = open(file[:-4] + ' - trimmed.nds', 'wb')
+		ouputFile.write(rom)
+		ouputFile.close()
 
-	print('\nDone! Trimmed rom saved as:\n"' + file[:-4] + ' - trimmed.nds"')
+		print('\nDone! Trimmed rom saved as:\n"' + file[:-4] + ' - trimmed.nds"')
 
 # Clears the screen
 clear()

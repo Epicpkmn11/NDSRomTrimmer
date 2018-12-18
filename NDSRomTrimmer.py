@@ -99,7 +99,7 @@ clear()
 while True:
 	# Getting the rom name
 	print('='*80)
-	file = input('Enter your rom file or Drag/Drop it here: (or press Enter to quit)\n> ')
+	file = input('Enter your rom file name or Drag/Drop it here: (or press Enter to quit)\n> ')
 	file = cleanFileName(file)
 	if (file != ''):
 		clear()
